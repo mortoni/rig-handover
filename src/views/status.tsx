@@ -15,12 +15,16 @@ export function StatusBoard({ status }: { status: Status }) {
         </tbody>
       </table>
       <h2>nights on disk</h2>
-      {status.nights.length === 0 ? (
+      {status.digests.length === 0 ? (
         <p class="mute">nothing in runs/</p>
       ) : (
         <ul>
-          {status.nights.map((n) => (
-            <li>{n}</li>
+          {status.digests.map((d) => (
+            <li>
+              <a href={`/digest/${d.night}`}>{d.night}</a>
+              {` ok ${d.counts.ok} · retry ${d.counts.retry} · fail ${d.counts.fail}`}
+              {d.badLines > 0 && ` · ${d.badLines} bad ${d.badLines === 1 ? 'line' : 'lines'}`}
+            </li>
           ))}
         </ul>
       )}
